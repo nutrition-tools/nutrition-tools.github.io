@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>note記事：医療・ヘルスケアの現場でAIを使う前に</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #fafaf8;
+    color: #1a1a1a;
+    line-height: 1.9;
+    font-size: 16px;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 24px 120px;
+  }
+
+  .label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #4a7c6f;
+    border: 1.5px solid #4a7c6f;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.55;
+    color: #111;
+    margin-bottom: 16px;
+  }
+
+  .meta {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #e8e8e4;
+  }
+
+  .intro-box {
+    background: #f0f5f3;
+    border-left: 3px solid #4a7c6f;
+    padding: 20px 24px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 48px;
+    font-size: 15px;
+    color: #333;
+  }
+
+  h2 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111;
+    margin-top: 56px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e8e8e4;
+  }
+
+  h2 .num {
+    color: #4a7c6f;
+    margin-right: 6px;
+  }
+
+  p {
+    margin-bottom: 20px;
+    color: #2a2a2a;
+    font-size: 15.5px;
+  }
+
+  .risk-list {
+    list-style: none;
+    margin: 20px 0 28px;
+  }
+
+  .risk-list li {
+    padding: 12px 16px 12px 44px;
+    margin-bottom: 8px;
+    background: #fff8f6;
+    border: 1px solid #f0d8d0;
+    border-radius: 6px;
+    font-size: 15px;
+    position: relative;
+    color: #2a2a2a;
+  }
+
+  .risk-list li::before {
+    content: "⚠";
+    position: absolute;
+    left: 14px;
+    color: #c0623a;
+    font-size: 16px;
+  }
+
+  .table-wrapper {
+    margin: 24px 0 32px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0da;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+
+  thead th {
+    background: #2d4a42;
+    color: #fff;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  tbody tr:nth-child(even) { background: #f5f5f0; }
+  tbody tr:nth-child(odd) { background: #fff; }
+
+  tbody td {
+    padding: 11px 16px;
+    border-bottom: 1px solid #eeeee9;
+    color: #2a2a2a;
+    vertical-align: top;
+  }
+
+  .ok { color: #2e7d5e; font-weight: 700; }
+  .ng { color: #b94a2a; font-weight: 700; }
+
+  .example-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 24px 0 32px;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e0e0da;
+    border-radius: 8px;
+    padding: 20px 22px;
+  }
+
+  .card-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: #4a7c6f;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 10px;
+  }
+
+  .card p {
+    font-size: 14.5px;
+    color: #444;
+    margin-bottom: 10px;
+  }
+
+  .card .example {
+    background: #f5f7f5;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    color: #333;
+    border-left: 2px solid #4a7c6f;
+    margin-bottom: 0;
+  }
+
+  .point-box {
+    background: #fff;
+    border: 1.5px solid #4a7c6f;
+    border-radius: 8px;
+    padding: 22px 24px;
+    margin: 32px 0;
+  }
+
+  .point-box .point-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4a7c6f;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  .point-box p {
+    font-size: 15px;
+    margin-bottom: 0;
+    color: #222;
+  }
+
+  .cta-box {
+    margin-top: 56px;
+    background: #2d4a42;
+    color: #fff;
+    border-radius: 10px;
+    padding: 32px 28px;
+    text-align: center;
+  }
+
+  .cta-box .cta-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: #a8c9be;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .cta-box h3 {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+
+  .cta-box p {
+    font-size: 14px;
+    color: #c8ddd8;
+    margin-bottom: 0;
+  }
+
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: #4a7c6f;
+    margin: 48px 0;
+  }
+
+  .author-note {
+    font-size: 13px;
+    color: #888;
+    border-top: 1px solid #e8e8e4;
+    padding-top: 24px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <span class="label">AI活用 × ヘルスケア</span>
+
+  <h1>医療・ヘルスケアの現場でAIを使う前に、<br>これだけ決めれば怖くない</h1>
+
+  <div class="meta">管理栄養士 / 三毛猫投資家🐱　｜　読了時間：約5分</div>
+
+  <div class="intro-box">
+    「ChatGPTで業務を楽にしたいけど、患者さんの情報を入れていいのか不安」<br><br>
+    現場でこういう声をよく聞きます。結論から言うと、<strong>使い方さえ決めれば怖くない</strong>。ルールを整理するだけで、今日から安全に使い始めることができます。
+  </div>
+
+
+  <h2><span class="num">1.</span>なぜ個人情報をAIに入れてはいけないのか</h2>
+
+  <p>まず、なぜ「個人情報をAIに入れてはいけない」と言われるのか、具体的に整理します。ChatGPTなどの一般向けAIサービスは、デフォルトでは<strong>入力した内容がサービスの改善に使われる可能性</strong>があります。</p>
+
+  <p>医療・ヘルスケアの現場で特に問題になるのは以下のケースです。</p>
+
+  <ul class="risk-list">
+    <li>患者名・IDなどの識別情報をそのまま入力する</li>
+    <li>「Aさん（50代男性）の検査値が〇〇で…」と実名や特定できる情報を含めて質問する</li>
+    <li>施設・クリニック内の未公開情報（患者数・売上・スタッフ情報）を入力する</li>
+    <li>第三者提供を前提としていない健康データをクラウドサービスに送信する</li>
+  </ul>
+
+  <p>個人情報保護法の観点から、これらは本人の同意なしに第三者（AIサービス）に提供したとみなされるリスクがあります。また、万が一情報漏洩が起きた場合、施設としての信頼を大きく損なうことになります。</p>
+
+  <div class="point-box">
+    <div class="point-title">POINT</div>
+    <p>怖いのは「AIを使うこと」ではなく、「個人が特定できる情報を入れること」。ここさえ守れば、AIは現場の強力な味方になります。</p>
+  </div>
+
+
+  <h2><span class="num">2.</span>入れていい情報・いけない情報の仕分け方</h2>
+
+  <p>シンプルな基準は1つ。<strong>「その情報だけで特定の人が識別できるか」</strong>です。</p>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>情報の種類</th>
+          <th>判断</th>
+          <th>理由・補足</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>患者名・生年月日・住所</td>
+          <td><span class="ng">NG</span></td>
+          <td>個人識別情報そのもの</td>
+        </tr>
+        <tr>
+          <td>「60代女性、HbA1c 7.2」などの匿名ケース</td>
+          <td><span class="ok">OK</span></td>
+          <td>特定できなければ問題なし</td>
+        </tr>
+        <tr>
+          <td>「糖尿病患者への食事指導の文章を作って」</td>
+          <td><span class="ok">OK</span></td>
+          <td>個人情報ゼロ、テンプレ作成に最適</td>
+        </tr>
+        <tr>
+          <td>施設名＋スタッフ名＋具体的なトラブル内容</td>
+          <td><span class="ng">NG</span></td>
+          <td>施設・個人が特定される可能性あり</td>
+        </tr>
+        <tr>
+          <td>「栄養指導でよく聞かれる質問への回答例を作って」</td>
+          <td><span class="ok">OK</span></td>
+          <td>汎用的な業務支援として問題なし</td>
+        </tr>
+        <tr>
+          <td>「こういう状況の患者に何を勧めるべきか（匿名化済み）」</td>
+          <td><span class="ok">OK</span></td>
+          <td>思考の壁打ちとして活用できる</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>迷ったときは「名前と所属を隠しても、誰のことか分かってしまうか？」を自問してみてください。答えがYesなら入力しない、それだけです。</p>
+
+
+  <h2><span class="num">3.</span>現場で今日から使えるAI活用の例3つ</h2>
+
+  <p>個人情報を一切使わずに、業務を大幅に楽にできる使い方を紹介します。</p>
+
+  <div class="example-cards">
+    <div class="card">
+      <div class="card-num">EXAMPLE 01</div>
+      <h3>指導の定型文・チャット文章の作成</h3>
+      <p>「食後血糖が高い方へのフォローチャットの文章を、励ます雰囲気で3パターン作って」といったプロンプトで、すぐに使える文章の叩き台が出てきます。あとは自分らしく微調整するだけ。</p>
+      <div class="example">💬 プロンプト例：「食事記録を続けられていない参加者に、責めずにまた記録してもらえるよう促すメッセージを書いて。200字以内で」</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">EXAMPLE 02</div>
+      <h3>患者向け資料・説明文の作成</h3>
+      <p>「糖質制限について患者さんにわかりやすく説明する1枚ものの資料の文章を作って」のように依頼するだけで、専門用語を噛み砕いた説明文の草案が手に入ります。ゼロから書く時間を大幅に短縮できます。</p>
+      <div class="example">💬 プロンプト例：「GI値について、医療知識がない60代の方に向けてわかりやすく説明する文章を300字で書いて」</div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">EXAMPLE 03</div>
+      <h3>匿名ケースでの思考整理・壁打ち</h3>
+      <p>「60代女性、血糖値が食後に上がりやすい。昼食はコンビニが多い。何から改善を勧めるべきか」のように、個人を特定しない形で相談すると、栄養学的な整理を手伝ってもらえます。</p>
+      <div class="example">💬 プロンプト例：「50代男性、BMI28、外食中心で野菜が少ない。血糖値改善のために優先すべき食事の改善ポイントを3つ挙げて」</div>
+    </div>
+  </div>
+
+  <div class="point-box">
+    <div class="point-title">まとめ</div>
+    <p>AIに「個人情報を入れない」ルールを1つ守るだけで、日常業務の大半はAIで効率化できます。恐る恐る使うより、使い方のルールを決めてから堂々と使う方が、結果的に安全で生産的です。</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <p style="font-size:15px; color:#444;">私は管理栄養士としてヘルスケア現場でのAI活用を実務でやってきました。「自分の職場でどう使えばいいか相談したい」という方、お気軽にDMまたは以下からどうぞ。</p>
+
+  <div class="cta-box">
+    <div class="cta-label">CONTACT / SERVICE</div>
+    <h3>ヘルスケア現場のAI活用、<br>一緒に整理しませんか</h3>
+    <p>「何から始めればいいかわからない」という段階からご相談をお受けしています。<br>スポット相談（オンライン）受付中。</p>
+  </div>
+
+  <div class="author-note">
+    ※ 本記事は一般的な情報提供を目的としています。個別の法的判断・セキュリティ対応については、各施設の方針および専門家にご確認ください。
+  </div>
+
+</div>
+</body>
+</html>
