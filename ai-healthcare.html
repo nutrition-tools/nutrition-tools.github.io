@@ -17,10 +17,132 @@
     font-size: 16px;
   }
 
+  .page-layout {
+    display: flex;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 24px;
+    gap: 40px;
+  }
+
   .container {
     max-width: 680px;
-    margin: 0 auto;
-    padding: 60px 24px 120px;
+    flex: 1;
+    padding: 60px 0 120px;
+  }
+
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+    padding-top: 60px;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .sidebar-section {
+    margin-bottom: 28px;
+  }
+
+  .sidebar-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #4a7c6f;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .sidebar-list {
+    list-style: none;
+  }
+
+  .sidebar-list li {
+    margin-bottom: 6px;
+  }
+
+  .sidebar-list a {
+    display: block;
+    font-size: 13px;
+    color: #555;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border-left: 2px solid transparent;
+    transition: all 0.2s;
+  }
+
+  .sidebar-list a:hover {
+    color: #1a1a1a;
+    background: #f0f5f3;
+    border-left-color: #4a7c6f;
+  }
+
+  .sidebar-list a.active {
+    color: #4a7c6f;
+    font-weight: 500;
+    border-left-color: #4a7c6f;
+    background: #f0f5f3;
+  }
+
+  .sidebar-link {
+    display: block;
+    font-size: 13px;
+    color: #4a7c6f;
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .sidebar-link:hover {
+    background: #f0f5f3;
+  }
+
+  .back-to-top {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 44px;
+    height: 44px;
+    background: #2d4a42;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+  }
+
+  .back-to-top:hover {
+    background: #4a7c6f;
+  }
+
+  @media (max-width: 800px) {
+    .page-layout {
+      flex-direction: column;
+    }
+    .sidebar {
+      width: 100%;
+      position: static;
+      max-height: none;
+      padding-top: 24px;
+      border-bottom: 1px solid #e8e8e4;
+      padding-bottom: 24px;
+      margin-bottom: 0;
+    }
   }
 
   .label {
@@ -258,6 +380,25 @@
 </style>
 </head>
 <body>
+<div class="page-layout">
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-title">Articles</div>
+    <ul class="sidebar-list">
+      <li><a href="ai-healthcare.html" class="active">AI安全活用ガイド</a></li>
+      <li><a href="#" style="opacity:0.4; pointer-events:none;">食後血糖スパイクを防ぐ食べ方3つ（近日公開）</a></li>
+      <li><a href="#" style="opacity:0.4; pointer-events:none;">血糖値スパイクと投資判断力の関係（近日公開）</a></li>
+    </ul>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-title">Links</div>
+    <a href="index.html" class="sidebar-link">← ホームページへ戻る</a>
+    <a href="https://twitter.com/messages" class="sidebar-link" target="_blank">XのDMで相談する</a>
+  </div>
+</aside>
+
 <div class="container">
 
   <span class="label">AI活用 × ヘルスケア</span>
@@ -383,7 +524,12 @@
   <div class="cta-box">
     <div class="cta-label">CONTACT / SERVICE</div>
     <h3>ヘルスケア現場のAI活用、<br>一緒に整理しませんか</h3>
-    <p>「何から始めればいいかわからない」という段階からご相談をお受けしています。<br>スポット相談（オンライン）受付中。</p>
+    <p>「何から始めればいいかわからない」という段階からご相談をお受けしています。<br>まずはお気軽にDMでご連絡ください。</p>
+    <a href="https://twitter.com/messages" target="_blank" style="display:inline-block; margin-top:16px; padding:10px 28px; background:#fff; color:#2d4a42; font-size:14px; font-weight:700; border-radius:6px; text-decoration:none; transition:opacity 0.2s;">XのDMで相談する →</a>
+  </div>
+
+  <div style="text-align:center; margin-top:32px;">
+    <a href="index.html" style="font-size:14px; color:#4a7c6f; text-decoration:none;">← ホームページへ戻る</a>
   </div>
 
   <div class="author-note">
@@ -391,5 +537,15 @@
   </div>
 
 </div>
+</div><!-- /page-layout -->
+
+<button class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  const btn = document.querySelector('.back-to-top');
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  });
+</script>
 </body>
 </html>
